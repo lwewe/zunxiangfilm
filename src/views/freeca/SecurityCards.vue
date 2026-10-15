@@ -454,6 +454,8 @@ export default {
         }else if (pid == 12) {
           // window.location.replace(this.$store.state.cakeUrl+"/index")
           window.location.href = this.$store.state.cakeUrl+"/index"
+        }else{
+           window.location.href = this.$store.state.shopUrl+"/index"
         }
       }
       // 待操作
