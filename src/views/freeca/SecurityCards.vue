@@ -12,26 +12,26 @@
     <!--    </van-tabs>-->
     <div class="tabs">
       <div v-for="item in tabList" :key="item.id" @click="onClickTab(item.id)">
-        <div class="tabText" :class="{tabText1:active==item.id}">{{item.text}}</div>
-        <div class="tabImg" v-if="active==item.id">
+        <div class="tabText" :class="{ tabText1: active == item.id }">{{ item.text }}</div>
+        <div class="tabImg" v-if="active == item.id">
           <img class="img" src="../../assets/card/del.png" alt="">
         </div>
       </div>
     </div>
     <div>
-      <div class="filter" v-if="active==0">
-        <span @click="cardsort(0,$event)" class="select">可使用</span>
-        <span @click="cardsort(1,$event)" class="select">即将过期</span>
-        <span @click="sortA(2,$event)" class="select sort" style="position: relative;padding-right: 20px;">
-            点数
+      <div class="filter" v-if="active == 0">
+        <span @click="cardsort(0, $event)" class="select">可使用</span>
+        <!-- <span @click="cardsort(1,$event)" class="select">即将过期</span> -->
+        <span @click="sortA(2, $event)" class="select sort" style="position: relative;padding-right: 20px;">
+          点数
 
-              <img src="../../assets/Group 919.png" alt="" style="width: 10px;position: absolute;top: 6px;right: 6px;">
-              <img src="../../assets/Group 920.png" alt="" style="width: 10px;position: absolute;top: 11px;right: 6px;">
+          <img src="../../assets/Group 919.png" alt="" style="width: 10px;position: absolute;top: 6px;right: 6px;">
+          <img src="../../assets/Group 920.png" alt="" style="width: 10px;position: absolute;top: 11px;right: 6px;">
 
-          </span>
+        </span>
 
       </div>
-      <div v-if="active==2">
+      <div v-if="active == 2">
         <div class="tipitsBox">
           <div class="tipits">
             <img class="img" src="../../assets/fukaxq/jg.png" alt="">
@@ -40,72 +40,72 @@
         </div>
         <div class="cardTitle">卡片管理</div>
       </div>
-      <div class="cardbody" :class="{cardbody2:change&&active==2,cardbody3:change&&active!=2}"
-           :style="{paddingTop:active==2?'0px':'',paddingBottom:active==2?'70px':'10px'}">
+      <div class="cardbody" :class="{ cardbody2: change && active == 2, cardbody3: change && active != 2 }"
+        :style="{ paddingTop: active == 2 ? '0px' : '', paddingBottom: active == 2 ? '70px' : '10px' }">
         <Loading v-if="isloading"></Loading>
         <!-- 尊享券 -->
         <!-- 超级卡:style="'background-image: url('+item.backImg+')'"  -->
-        <div style="position: relative" v-for="(item,index) in list" :key="index" v-if="list.length>0">
-          <div v-if="active==2">
+        <div style="position: relative" v-for="(item, index) in list" :key="index" v-if="list.length > 0">
+          <div v-if="active == 2">
             <div class="choose" v-if="!item.isCheckout" @click="chooseCard(item)">选择</div>
             <div class="choose choosed" v-else @click="nochooseCard(item)">已选择</div>
           </div>
-          <div :style="'backgroundImage:url('+item.backImg+')'" class="card1" @click="gocardinfo(item)">
+          <div :style="'backgroundImage:url(' + item.backImg + ')'" class="card1" @click="gocardinfo(item)">
             <div class="left">
-                <span class="cardtitle"><img v-if="item.pid==1" src="../../assets/card/23.png" alt=""
-                                             style="width: 40px;height: 37px;">
-                  <span
-                      style="padding-top: 2px;" :style="'background: linear-gradient(to right,'+item.btnGradient+'); -webkit-background-clip: text;\n'+
-'  background-clip: text;\n'+
-'  color: transparent;'">{{ item.cardName }}</span>
-                </span>
-              <span class="cardaccount" :style="'color:'+item.colorText2+''">{{ item.num }}</span>
-              <p class="cardinfo"><span :style="'color:'+item.colorText2+''">余额(点)</span> <span
-                  :style="'color:'+item.colorText2+''">有效期</span>
+              <span class="cardtitle"><img v-if="item.pid == 1" src="../../assets/card/23.png" alt=""
+                  style="width: 40px;height: 37px;">
+                <span style="padding-top: 2px;" :style="'background: linear-gradient(to right,' + item.btnGradient + '); -webkit-background-clip: text;\n' +
+                  '  background-clip: text;\n' +
+                  '  color: transparent;'">{{ item.cardName }}</span>
+              </span>
+              <span class="cardaccount" :style="'color:' + item.colorText2 + ''">{{ item.num }}</span>
+              <p class="cardinfo"><span :style="'color:' + item.colorText2 + ''">余额(点)</span> <span
+                  :style="'color:' + item.colorText2 + ''">有效期</span>
               </p>
-              <p class="cardinforesult"><span :style="'background: linear-gradient(to bottom,'+item.btnGradient+');-webkit-background-clip: text;\n'+
-'  background-clip: text;\n'+
-'  color: transparent;'">{{ item.price }}</span>
-                <span :style="'background: linear-gradient(to bottom,'+item.btnGradient+');-webkit-background-clip: text;\n'+
-'  background-clip: text;\n'+
-'  color: transparent;'">{{ timestampToTime(item.end_time) }}</span></p>
+              <p class="cardinforesult"><span :style="'background: linear-gradient(to bottom,' + item.btnGradient + ');-webkit-background-clip: text;\n' +
+                '  background-clip: text;\n' +
+                '  color: transparent;'">{{ item.price }}</span>
+                <span :style="'background: linear-gradient(to bottom,' + item.btnGradient + ');-webkit-background-clip: text;\n' +
+                  '  background-clip: text;\n' +
+                  '  color: transparent;'">{{ timestampToTime(item.end_time) }}</span>
+              </p>
             </div>
             <div class="right">
-              <div class="seemore" :style="'border:1px solid '+item.colorText2+';color:'+item.colorText2+''">
+              <div class="seemore" :style="'border:1px solid ' + item.colorText2 + ';color:' + item.colorText2 + ''">
                 <div>查看权益</div>
-                <div class="iconBack" :style="'background-color:'+item.iconColor+';color:'+item.colorText3+''">
-                  <van-icon class="jiantou" name="arrow" size="11px" style=""/>
+                <div class="iconBack" :style="'background-color:' + item.iconColor + ';color:' + item.colorText3 + ''">
+                  <van-icon class="jiantou" name="arrow" size="11px" style="" />
                 </div>
               </div>
               <!-- 失效状态 -->
               <button @click.stop="go(item.pid)"
-                      :style="'background: linear-gradient(to right,'+item.btnGradient+');color:'+item.btnColor+''">
+                :style="'background: linear-gradient(to right,' + item.btnGradient + ');color:' + item.btnColor + ''">
                 立即购买
               </button>
             </div>
           </div>
         </div>
         <!-- 福利券 -->
-        <div v-for="(item,index) in list2" :key="index" v-if="list2.length>0" @click="gocardinfo(item)">
+        <div v-for="(item, index) in list2" :key="index" v-if="list2.length > 0" @click="gocardinfo(item)">
           <!-- 超级券 -->
-          <div class="voucher1 " :style="'backgroundImage:url('+item.backImg+')'">
+          <div class="voucher1 " :style="'backgroundImage:url(' + item.backImg + ')'">
             <div class="left">
-              <div class="see" :style="'border:1px solid '+item.borderColor+';color:'+item.borderTextColor+''"
-                   v-if="item.pid!=10&&item.pid!=11">
+              <div class="see" :style="'border:1px solid ' + item.borderColor + ';color:' + item.borderTextColor + ''"
+                v-if="item.pid != 10 && item.pid != 11">
                 <div style="font-size: 12px;">查看权益</div>
-                <div class="iconBack" :style="'background-color:'+item.borderTextColor+''">
-                  <van-icon class="jiantou" name="arrow" color="#fff" size="10px"/>
+                <div class="iconBack" :style="'background-color:' + item.borderTextColor + ''">
+                  <van-icon class="jiantou" name="arrow" color="#fff" size="10px" />
                 </div>
               </div>
             </div>
             <div class="center">
               <div class="title titleBox">
                 <div style="white-space: nowrap">{{ item.cardName }}</div>
-                <div class="seeBox" :style="'border:1px solid '+item.borderColor+';color:'+item.borderTextColor+''"
-                     v-if="item.pid==10||item.pid==11">
+                <div class="seeBox" :style="'border:1px solid ' + item.borderColor + ';color:' + item.borderTextColor + ''"
+                  v-if="item.pid == 10 || item.pid == 11">
                   <div style="font-size: 12px;white-space: nowrap">查看权益</div>
-                  <div class="iconBack" :style="'background-color:'+item.borderTextColor+''">
-                    <van-icon class="jiantou" name="arrow" color="#fff" size="10px"/>
+                  <div class="iconBack" :style="'background-color:' + item.borderTextColor + ''">
+                    <van-icon class="jiantou" name="arrow" color="#fff" size="10px" />
                   </div>
                 </div>
               </div>
@@ -114,12 +114,12 @@
               <div class="result"><span>{{ item.price }}</span><span>{{ timestampToTime(item.end_time) }}</span></div>
             </div>
             <div class="right">
-              <button style="white-space: nowrap" @click.stop="go(item.pid,item.id,item.gid)">立即购买</button>
+              <button style="white-space: nowrap" @click.stop="go(item.pid, item.id, item.gid)">立即购买</button>
             </div>
           </div>
         </div>
         <!--        绑卡按钮-->
-        <div v-if="active==0" class="bindcard" @click="gobindingCard()">
+        <div v-if="active == 0" class="bindcard" @click="gobindingCard()">
           <van-icon name="plus" />
           <span>绑定新卡</span>
           <span> 扫码/输入券密绑定</span>
@@ -127,45 +127,45 @@
       </div>
     </div>
     <!--    合并按钮-->
-    <div class="merge" :class="{merge2:change}" v-if="list.length>0&&active==2">
-      <div class="mergeBtn" :class="{mergeBtn2:list.filter(item=>item.isCheckout==true).length>1}" @click="mergecards">
+    <div class="merge" :class="{ merge2: change }" v-if="list.length > 0 && active == 2">
+      <div class="mergeBtn" :class="{ mergeBtn2: list.filter(item => item.isCheckout == true).length > 1 }" @click="mergecards">
         合并
-        <span
-            v-if="list.filter(item=>item.isCheckout==true).length>0">({{
-            list.filter(item => item.isCheckout == true).length
-          }})</span>
+        <span v-if="list.filter(item => item.isCheckout == true).length > 0">({{
+          list.filter(item => item.isCheckout == true).length
+        }})</span>
       </div>
     </div>
-    <NProgress v-if="loadingflag"/>
-    <ShopTab v-if="change==1" :active="3"></ShopTab>
-    <CakeTab v-if="change==2" :active="2"></CakeTab>
-    <BookTab v-if="change==3" :active="3"></BookTab>
+    <NProgress v-if="loadingflag" />
+    <ShopTab v-if="change == 1" :active="3"></ShopTab>
+    <CakeTab v-if="change == 2" :active="2"></CakeTab>
+    <BookTab v-if="change == 3" :active="3"></BookTab>
   </div>
 </template>
 
 <script>
-import {getCardList, getEnableCard} from "@/api/minecard"
+import { getCardList, getEnableCard } from "@/api/minecard"
 import ShopTab from "@/components/ShopTab.vue";
 import CakeTab from "@/components/CakeTab.vue";
 import BookTab from "@/components/BookTab.vue";
-import {checkmergecards, mergecards} from "@/api/locality/card";
+import { checkmergecards, mergecards } from "@/api/locality/card";
 import Loading from "@/components/loding.vue";
 
 export default {
-  components: {Loading, CakeTab, ShopTab, BookTab},
+  components: { Loading, CakeTab, ShopTab, BookTab },
 
   data() {
     return {
-      tabList:[
+      tabList: [
         {
-          id:0,
-          text:"可使用"
+          id: 0,
+          text: "可使用"
         },
-        {
-          id:1,
-          text:"不可用"
-        },
+        // {
+        //   id:1,
+        //   text:"不可用"
+        // },
       ],
+      isFirstEnter: true,
       active: 0,
       token: null,
       endtime: "2026-12-13",
@@ -185,6 +185,20 @@ export default {
 
   mounted() {
 
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (vm.isFirstEnter) {
+        vm.isFirstEnter = false
+        return
+      }
+      vm.loadingflag = true
+      vm.list = []
+      vm.list2 = []
+      vm.pidsList = []
+      vm.npid = ''
+      vm.getCards()
+    })
   },
   created() {
     this.token = localStorage.getItem("token")
@@ -273,7 +287,7 @@ export default {
     },
     onClickTab(e) {
       this.active = e
-      this.$router.replace({path: '/SecurityCards', query: {active: e}})
+      this.$router.replace({ path: '/SecurityCards', query: { active: e } })
       this.list = []
       this.list2 = []
       if (e == 0) {
@@ -312,7 +326,7 @@ export default {
         var borderColor = ""
         var borderTextColor = ""
         //卡类型 10-商城尊享券11-电影尊享券12-蛋糕尊享券
-        card_list.filter(item2=>item2.pid>=10).forEach(item => {
+        card_list.filter(item2 => item2.pid >= 10).forEach(item => {
           if (item.pid == 10) {
             backImg = require("../../assets/card/10.png")
             backImg2 = require("../../assets/card/110.png")
@@ -325,7 +339,7 @@ export default {
             cardName = "电影尊享券"
             borderColor = "#BABCCA"
             borderTextColor = "#1D2551"
-          }else if (item.pid == 12) {
+          } else if (item.pid == 12) {
             backImg = require("../../assets/card/12.png")
             backImg2 = require("../../assets/card/120.png")
             cardName = "蛋糕尊享券"
@@ -422,7 +436,7 @@ export default {
       return y + '-' + MM + '-' + d
     },
     gobindingCard() {
-      this.$router.push({path: "/bindingCard"})
+      this.$router.push({ path: "/bindingCard" })
     },
     cardsort(num) {
       document.getElementsByClassName("sort")[0].style.background = "#f0f0f0"
@@ -441,21 +455,21 @@ export default {
       }
       this.getCards(num + 1)
     },
-    go(pid,kid,gid) {
+    go(pid, kid, gid) {
       if (pid >= 10) {
-        localStorage.setItem("kid",kid)
-        localStorage.setItem("gid",gid)
-        localStorage.setItem("pid",pid)
-        if(pid==10){
+        localStorage.setItem("kid", kid)
+        localStorage.setItem("gid", gid)
+        localStorage.setItem("pid", pid)
+        if (pid == 10) {
           // window.location.replace(this.$store.state.shopUrl+"/index")
-          window.location.href = this.$store.state.shopUrl+"/index"
-        }else if (pid == 11) {
-          this.$router.push({path: "/index"})
-        }else if (pid == 12) {
+          window.location.href = this.$store.state.shopUrl + "/index"
+        } else if (pid == 11) {
+          this.$router.push({ path: "/index" })
+        } else if (pid == 12) {
           // window.location.replace(this.$store.state.cakeUrl+"/index")
-          window.location.href = this.$store.state.cakeUrl+"/index"
-        }else{
-           window.location.href = this.$store.state.shopUrl+"/index"
+          window.location.href = this.$store.state.cakeUrl + "/index"
+        } else {
+          window.location.href = this.$store.state.shopUrl + "/index"
         }
       }
       // 待操作
@@ -560,6 +574,7 @@ export default {
   font-size: 15px;
   padding-left: 10px;
 }
+
 .securitycards .cardbody .bindcard span:nth-of-type(2) {
   font-size: 13px;
   color: #F3A04C;
@@ -715,9 +730,7 @@ export default {
   padding: 3px 2px;
 }
 
-.securitycards .cardbody .voucher1 .left .see div {
-
-}
+.securitycards .cardbody .voucher1 .left .see div {}
 
 .securitycards .cardbody .voucher1 .center {
   flex: 1;
@@ -780,7 +793,7 @@ export default {
 
 /* 超级券 */
 
->>> .van-tabs--line {
+>>>.van-tabs--line {
   padding-top: 30px !important;
 }
 
@@ -886,7 +899,8 @@ export default {
   width: 85%;
   gap: 10px;
 }
-.tabs{
+
+.tabs {
   background-color: white;
   padding: 10px 10px 0px;
   width: 100%;
@@ -894,18 +908,21 @@ export default {
   justify-content: space-around;
   box-sizing: border-box;
 }
-.tabImg{
+
+.tabImg {
   width: 55px;
   margin: auto;
   margin-top: -10px;
 }
-.tabText{
+
+.tabText {
   position: relative;
   z-index: 1;
   color: #646464;
   font-size: 13px;
 }
-.tabText1{
+
+.tabText1 {
   font-weight: bold;
   font-size: 15px;
   color: black;
